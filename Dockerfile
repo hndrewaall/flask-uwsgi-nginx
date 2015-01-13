@@ -24,22 +24,22 @@ RUN \
     supervisor \
     python-dev \
     python \
-    git \
-  easy_install pip \
-  pip install uwsgi \
-  pip install flask \
-  mkdir -p /var/log/supervisor
+    git
 
-# install our code
-ADD . /home/docker/code/
+RUN easy_install pip
+RUN pip install uwsgi
+RUN pip install flask
+# RUN pip install supervisor-stdout
+RUN mkdir -p /var/log/supervisor
 
 # Configure Nginx
-RUN rm /etc/nginx/sites-enabled/default
-RUN ln -s /home/docker/code/nginx-app.conf /etc/nginx/sites-enabled/
-RUN ln -s /home/docker/code/supervisor-app.conf /etc/supervisor/conf.d/
+RUN rm /etc/nginx/conf.d/default.conf
+RUN rm /etc/nginx/conf.d/example_ssl.conf
+RUN ln -s /opt/massgo/repos/flask-uwsgi-nginx/nginx-app.conf /etc/nginx/conf.d/
+RUN ln -s /opt/massgo/repos/flask-uwsgi-nginx/supervisord.conf /etc/supervisor/conf.d/
 
-# run pip install
-RUN pip install -r /home/docker/code/app/requirements.txt
+# # run pip install
+# RUN pip install -r /opt/massgo/repos/mgaladder/requirements.txt
 
 EXPOSE 80 443
 
