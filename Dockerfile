@@ -24,11 +24,12 @@ RUN \
     supervisor \
     python-dev \
     python \
-    git \
-  easy_install pip \
-  pip install uwsgi \
-  pip install flask \
-  mkdir -p /var/log/supervisor
+    git
+
+RUN easy_install pip
+RUN pip install uwsgi
+RUN pip install flask
+RUN mkdir -p /var/log/supervisor
 
 # Configure Nginx
 RUN rm /etc/nginx/sites-enabled/default
